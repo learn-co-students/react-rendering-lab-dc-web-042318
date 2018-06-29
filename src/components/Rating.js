@@ -1,15 +1,24 @@
 import React from 'react';
 
 class Rating extends React.Component {
-
   constructor(props) {
     super(props);
 
     this.state = {
       increasing: false,
-      decreasing: false
+      decreasing: false,
     };
   }
+
+  componentWillReceiveProps = nextProps => {
+    if (this.props.rating < nextProps.rating) {
+      this.setState({ increasing: true, decreasing: false });
+    } else if (this.props.rating > nextProps.rating) {
+      this.setState({ increasing: false, decreasing: true });
+    } else {
+      this.setState({ increasing: false, decreasing: false });
+    }
+  };
 
   render() {
     let trend = 'stable';
@@ -24,7 +33,7 @@ class Rating extends React.Component {
         <p>Rating: {this.props.rating}</p>
         <p>Trend: {trend}</p>
       </div>
-    )
+    );
   }
 }
 
